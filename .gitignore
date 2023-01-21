@@ -2,4 +2,7 @@ tmp/
 **.DS_Store
 **/nvim/autoload
 .config/fish/fish_variables
+.config/fish/conf.d
 .nvimlog
+.python-version
+**.vscode

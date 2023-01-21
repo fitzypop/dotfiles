@@ -61,11 +61,13 @@ if status is-interactive
 
     # Set Abbreviations
     # Docker
-    abbr -a d docker
-    abbr -a dc docker-compose
-    abbr -a dcdr 'docker-compose down --remove-orphans'
-    abbr -a docker_clean_images "docker rmi (docker images -a --filter=dangling=true -q)"
-    abbr -a docker_clean_ps "docker rm (docker ps --filter=status=exited --filter=status=created -q)"
+    if type -q docker
+        abbr -a d docker
+        abbr -a dc docker-compose
+        abbr -a dcdr 'docker-compose down --remove-orphans'
+        abbr -a docker_clean_images "docker rmi (docker images -a --filter=dangling=true -q)"
+        abbr -a docker_clean_ps "docker rm (docker ps --filter=status=exited --filter=status=created -q)"
+    end
 
     # Linux Specific things
     if test (uname) = Linux
@@ -83,7 +85,7 @@ if status is-interactive
 
 
     # My virtualenv setup command, easy pyenv integration without a wrapper
-    type -q virtualenv; and abbr -a nvenv 'virtualenv -p (pyenv version-name) .venv'; or abbr -e nvenv
+    type -q virtualenv; and abbr -a nvenv 'virtualenv -p (pyenv version-name) .venv'
 
     if type -q exa >/dev/null
         abbr -a ls exa
@@ -98,20 +100,23 @@ if status is-interactive
     abbr -a gaa 'git add -A'
 
     abbr -a gb 'git branch'
+    abbr -a gbl 'git branch -l'
+    abbr -a gbv 'git branch -vl'
+
+    abbr -a gcb 'git checkout -b'
+    abbr -a gch 'git checkout'
+    abbr -a gchpoetry 'git checkout master -- poetry.lock'
 
     abbr -a gcm 'git commit -m'
     abbr -a gcam 'git commit -am'
 
-    abbr -a gch 'git checkout'
-    abbr -a gchb 'git checkout -b'
-    abbr -a gchpoetry 'git checkout master -- poetry.lock'
-
-    abbr -a gd 'git diff'
-    abbr -a gds 'git diff --staged'
-
     # git diffs without lock files
     set _git_ignore_list "':!/*Cargo.lock' ':!/*deno.lock' ':!/*package-lock.json' ':!/*poetry.lock' ':!/*yarn.lock'"
+
+    abbr -a gd 'git diff'
     abbr -a gdnl git diff -- $_git_ignore_list
+
+    abbr -a gds 'git diff --staged'
     abbr -a gdsnl git diff --staged -- $_git_ignore_list
 
     abbr -a ggd 'git log --graph --oneline --decorate'
@@ -131,7 +136,6 @@ if status is-interactive
     if type -q gh
         abbr -a gprv 'gh pr view -w'
         abbr -a grv 'gh repo view -w'
-
     else
         abbr -e gprv
         abbr -e grv
