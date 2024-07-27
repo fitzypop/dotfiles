@@ -13,25 +13,23 @@ set -q XDG_CONFIG_HOME; or set -gx XDG_CONFIG_HOME $HOME/.config
 set -q XDG_CACHE_HOME; or set -gx XDG_CACHE_HOME $HOME/.cache
 
 # Langs and tools setup
-## Rust / Cargo
+## rust and cargo
 test -d $HOME/.cargo; and fish_add_path $HOME/.cargo/bin
 
-## Deno setup
+## deno
 if ! set -q DENO_INSTALL and test -d $HOME/.deno
     set -gx DENO_INSTALL $HOME/.deno
     fish_add_path $DENO_INSTALL/bin
 end
+
+## asdf
+source ~/.asdf/asdf.fish
 
 ## pnpm
 set -gx PNPM_HOME /Users/joefitzgibbons/Library/pnpm
 if not string match -q -- $PNPM_HOME $PATH
     set -gx PATH "$PNPM_HOME" $PATH
 end
-
-## asdf setup - WIP
-# ln -s ~/.asdf/completions/asdf.fish ~/.config/fish/completions
-# test -d $HOME/.asdf; and source ~/.asdf/asdf.fish
-
 
 if status is-interactive
     # Custom variables
@@ -165,12 +163,12 @@ if status is-interactive
 
     # Shell tools
     ## Pyenv setup
-    if test -d $HOME/.pyenv
-        set -q PYENV_ROOT; or set -gx PYENV_ROOT $HOME/.pyenv
-        fish_add_path $PYENV_ROOT/bin
-        status is-login; and pyenv init --path | source
-        status is-interactive; and pyenv init - | source
-    end
+    # if test -d $HOME/.pyenv
+    #     set -q PYENV_ROOT; or set -gx PYENV_ROOT $HOME/.pyenv
+    #     fish_add_path $PYENV_ROOT/bin
+    #     status is-login; and pyenv init --path | source
+    #     status is-interactive; and pyenv init - | source
+    # end
 
     if type -q zoxide
         zoxide init fish | source
