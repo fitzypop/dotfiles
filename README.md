@@ -89,3 +89,26 @@ sudo mkdir -p /usr/local/bin /usr/local/lib /usr/local/include /usr/local/share
 # take ownership of Node.js install destination folders
 sudo chown -R $(whoami) /usr/local/bin /usr/local/lib /usr/local/include /usr/local/share
 ```
+
+## ASDF
+
+Let's try out asdf
+
+<https://asdf-vm.com/guide/getting-started.html/>
+
+```sh
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.14.0
+
+# add to fish/config.fish
+source ~/.asdf/asdf.fish
+# close file
+
+# fish shell completions
+mkdir -p ~/.config/fish/completions; and ln -s ~/.asdf/completions/asdf.fish ~/.config/fish/completions
+
+# add nodejs plugin
+asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+
+# install a version
+asdf install nodejs latest
+```
